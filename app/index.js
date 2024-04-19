@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Pressable, Image, Alert } from 'react-native';
+import * as ScreenOrientation from 'expo-screen-orientation';
 import History from './history';
 import Journal from './journal';
 import { Calendar } from 'react-native-calendars';
@@ -14,6 +15,17 @@ const IndexScreen = () => {
 
   useEffect(() => {
     initDB().catch((error) => console.error('Failed to initialize the database', error));
+
+    const changeOrientation = async () => {
+      await ScreenOrientation.unlockAsync(); 
+      await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.ALL_BUT_UPSIDE_DOWN); 
+    };
+  
+    changeOrientation();
+  
+    return () => {
+      ScreenOrientation.unlockAsync();
+    };
   }, []);
 
   const handleTakePicture = async () => {
@@ -60,7 +72,6 @@ const IndexScreen = () => {
                 markedDates={{[today]: {selected: true, marked: true, selectedColor: 'blue'}}}
               />
             </View>
-
           </>
         );
       case 'journal':
