@@ -44,6 +44,10 @@ const IndexScreen = () => {
         return (
           <>
             <Text style={styles.title}>Welcome to the Journal App</Text>
+            <Pressable onPress={handleTakePicture}>
+              <Text style={styles.navigationButtons.buttonText}>Take Picture</Text>
+            </Pressable>
+            {imageUri && <Image source={{ uri: imageUri }} style={styles.imageStyle} />}
             <View style={styles.calendarContainer}>
               <Calendar
                 current={today}
@@ -56,10 +60,6 @@ const IndexScreen = () => {
                 markedDates={{[today]: {selected: true, marked: true, selectedColor: 'blue'}}}
               />
             </View>
-            <Pressable onPress={handleTakePicture}>
-              <Text style={styles.navigationButtons.buttonText}>Take Picture</Text>
-            </Pressable>
-            {imageUri && <Image source={{ uri: imageUri }} style={styles.imageStyle} />}
           </>
         );
       case 'journal':

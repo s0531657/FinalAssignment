@@ -1,5 +1,6 @@
+// Journal.js
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button } from 'react-native';
+import { View, Text, TextInput, Button, Vibration } from 'react-native';
 import styles from '../styles/page-styles';
 import { addEntry } from './database';
 
@@ -14,6 +15,7 @@ const Journal = () => {
     }
     try {
       await addEntry(entryTitle, entryContent);
+      Vibration.vibrate(); 
       alert('Entry saved!');
       setEntryTitle('');
       setEntryContent('');
