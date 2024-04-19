@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "FinalAssignment",
-    "slug": "FinalAssignment",
+    "name": "Journal",
+    "slug": "Journal",
     "version": "1.0.0",
-    "orientation": "default", 
+    "orientation": "default",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
@@ -16,7 +16,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "ca.natelapointe.vibration",
+      "bundleIdentifier": "ca.natelapointe.JournalApp",
       "buildNumber": "1.0.0"
     },
     "android": {
@@ -34,10 +34,18 @@
       [
         "expo-screen-orientation",
         {
-          "initialOrientation": "DEFAULT" 
+          "initialOrientation": "DEFAULT"
         }
       ]
     ],
-    "scheme": "router-demo"
+    "scheme": "router-demo",
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "ad9b95c2-5d2f-4aac-99a9-2d515b287ea9"
+      }
+    }
   }
 }
