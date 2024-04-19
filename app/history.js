@@ -1,22 +1,27 @@
-// history.js
-import React from 'react';
+// History.js
+import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList } from 'react-native';
 import styles from '../styles/page-styles';
+import { fetchEntries } from './database';
 
 const History = () => {
-  // Placeholder data - replace with your actual data source
-  const journalEntries = [
-    { id: '1', title: 'Entry 1', content: 'Content for entry 1...' },
-    { id: '2', title: 'Entry 2', content: 'Content for entry 2...' },
-    // ... more entries
-  ];
+  const [journalEntries, setJournalEntries] = useState([]);
+
+  useEffect(() => {
+    const loadJournalEntries = async () => {
+      const entries = await fetchEntries();
+      setJournalEntries(entries);
+    };
+
+    loadJournalEntries();
+  }, []);
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Journal History</Text>
       <FlatList
         data={journalEntries}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item.id.toString()}
         renderItem={({ item }) => (
           <View style={styles.listItem}>
             <Text style={styles.itemTitle}>{item.title}</Text>

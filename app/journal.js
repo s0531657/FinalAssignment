@@ -1,30 +1,30 @@
-// journal.js
+// Journal.js
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button } from 'react-native';
 import styles from '../styles/page-styles';
+import { addEntry } from './database';
 
 const Journal = () => {
   const [entryTitle, setEntryTitle] = useState('');
-  // Start with the preset text
-  const [entryContent, setEntryContent] = useState('New Entry Text');
+  const [entryContent, setEntryContent] = useState('');
 
-  const handleSaveEntry = () => {
-    // Logic to save the journal entry
-    alert('Entry saved!');
-    // Clear the form
-    setEntryTitle('');
-    setEntryContent('');
-  };
-
-  const clearPresetText = () => {
-    // Clear the preset text when the user starts typing, but only if it's the preset
-    if (entryContent === 'New Entry Text') {
+  const handleSaveEntry = async () => {
+    if (!entryTitle || !entryContent) {
+      alert('Please enter both a title and content for your journal entry.');
+      return;
+    }
+    try {
+      await addEntry(entryTitle, entryContent);
+      alert('Entry saved!');
+      setEntryTitle('');
       setEntryContent('');
+    } catch (error) {
+      alert('Failed to save entry: ' + error.message);
     }
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.journalTitleContainer}>
       <Text style={styles.title}>New Journal Entry</Text>
       <TextInput
         style={styles.input}
@@ -33,16 +33,15 @@ const Journal = () => {
         onChangeText={setEntryTitle}
       />
       <TextInput
-        style={[styles.input, styles.textArea]}
+        style={[styles.input, styles.journalTextArea]}
         placeholder="Entry Content"
         value={entryContent}
         onChangeText={setEntryContent}
         multiline
-        // Add the onFocus handler
-        onFocus={clearPresetText}
       />
       <Button title="Save Entry" onPress={handleSaveEntry} />
     </View>
+
   );
 };
 
