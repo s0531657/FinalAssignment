@@ -1,20 +1,19 @@
-// database.js
 import * as SQLite from 'expo-sqlite';
 
 const db = SQLite.openDatabase('journal.db');
 
+
 const initDB = async () => {
-  return new Promise((resolve, reject) => {
-    db.transaction(tx => {
-      tx.executeSql(
-        'CREATE TABLE IF NOT EXISTS entries (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, content TEXT);',
-        [],
-        () => resolve(),
-        (_, error) => reject(error)
-      );
-    });
+  db.transaction(tx => {
+    tx.executeSql(
+      'CREATE TABLE IF NOT EXISTS entries (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, content TEXT);',
+      [],
+      () => console.log('Table created successfully'),
+      (_, error) => console.log('Error creating table', error)
+    );
   });
 };
+
 
 const addEntry = async (title, content) => {
   return new Promise((resolve, reject) => {
@@ -28,6 +27,7 @@ const addEntry = async (title, content) => {
     });
   });
 };
+
 
 const fetchEntries = async () => {
   return new Promise((resolve, reject) => {

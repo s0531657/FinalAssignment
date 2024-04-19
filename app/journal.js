@@ -1,4 +1,3 @@
-// Journal.js
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button } from 'react-native';
 import styles from '../styles/page-styles';
@@ -24,7 +23,7 @@ const Journal = () => {
   };
 
   return (
-    <View style={styles.journalTitleContainer}>
+    <View style={styles.container}>
       <Text style={styles.title}>New Journal Entry</Text>
       <TextInput
         style={styles.input}
@@ -41,7 +40,6 @@ const Journal = () => {
       />
       <Button title="Save Entry" onPress={handleSaveEntry} />
     </View>
-
   );
 };
 

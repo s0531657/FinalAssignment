@@ -1,4 +1,3 @@
-// History.js
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList } from 'react-native';
 import styles from '../styles/page-styles';

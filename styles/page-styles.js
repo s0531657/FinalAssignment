@@ -1,5 +1,3 @@
-// page-styles.js
-
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -91,19 +89,36 @@ const styles = StyleSheet.create({
   
   // History Styles
   listItem: {
-    padding: 10,
-    marginVertical: 8,
     backgroundColor: '#f9f9f9',
-    borderColor: '#ccc',
     borderWidth: 1,
+    borderColor: '#ccc',
     borderRadius: 5,
+    padding: 10,
+    marginBottom: 5,
+    width: '100%',
+    alignItems: 'center', 
   },
+  
   itemTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     color: '#333',
   },
+
+  
+  
   // ---------------- HISTORY STYLES END HERE -------------------------
+
+  imageStyle: {
+    width: 100,   
+    height: 100,  
+    borderRadius: 50,  
+    marginTop: 20,
+    borderWidth: 1,  
+    borderColor: '#ddd',  
+    resizeMode: 'cover',
+  }
+  
 });
 
 export default styles;
