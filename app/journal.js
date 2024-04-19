@@ -1,4 +1,3 @@
-// Journal.js
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Vibration } from 'react-native';
 import styles from '../styles/page-styles';
