@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, Pressable, Image, Alert } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text, Pressable, Image, Alert, Animated } from 'react-native';
 import History from './history';
 import Journal from './journal';
 import { Calendar } from 'react-native-calendars';
@@ -11,6 +11,7 @@ const IndexScreen = () => {
   const [currentPage, setCurrentPage] = useState('home');
   const [imageUri, setImageUri] = useState(null);
   const today = new Date().toISOString().split('T')[0];
+  const scaleAnim = useRef(new Animated.Value(1)).current;  // Animated value for button press effect
 
   useEffect(() => {
     initDB().catch((error) => console.error('Failed to initialize the database', error));
@@ -36,6 +37,20 @@ const IndexScreen = () => {
     } catch (error) {
       Alert.alert("Camera Error", "There was an error using the camera.");
     }
+  };
+
+  const handlePressIn = () => {
+    Animated.spring(scaleAnim, {
+      toValue: 0.95,
+      useNativeDriver: true
+    }).start();
+  };
+
+  const handlePressOut = () => {
+    Animated.spring(scaleAnim, {
+      toValue: 1,
+      useNativeDriver: true
+    }).start();
   };
 
   const renderContent = () => {
@@ -75,15 +90,17 @@ const IndexScreen = () => {
     <View style={styles.container}>
       {renderContent()}
       <View style={styles.navigationContainer}>
-        <Pressable style={styles.navigationButtons.button} onPress={() => setCurrentPage('home')}>
-          <Text style={styles.navigationButtons.buttonText}>Home</Text>
-        </Pressable>
-        <Pressable style={styles.navigationButtons.button} onPress={() => setCurrentPage('journal')}>
-          <Text style={styles.navigationButtons.buttonText}>Journal</Text>
-        </Pressable>
-        <Pressable style={styles.navigationButtons.button} onPress={() => setCurrentPage('history')}>
-          <Text style={styles.navigationButtons.buttonText}>History</Text>
-        </Pressable>
+        <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
+          <Pressable style={styles.navigationButtons.button} onPress={() => setCurrentPage('home')} onPressIn={handlePressIn} onPressOut={handlePressOut}>
+            <Text style={styles.navigationButtons.buttonText}>Home</Text>
+          </Pressable>
+          <Pressable style={styles.navigationButtons.button} onPress={() => setCurrentPage('journal')} onPressIn={handlePressIn} onPressOut={handlePressOut}>
+            <Text style={styles.navigationButtons.buttonText}>Journal</Text>
+          </Pressable>
+          <Pressable style={styles.navigationButtons.button} onPress={() => setCurrentPage('history')} onPressIn={handlePressIn} onPressOut={handlePressOut}>
+            <Text style={styles.navigationButtons.buttonText}>History</Text>
+          </Pressable>
+        </Animated.View>
       </View>
     </View>
   );
